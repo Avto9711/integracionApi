@@ -34,6 +34,9 @@ namespace integracion.api
 
              services.AddDbContext<IntegrationDbContext>(opt => opt.UseSqlServer(conn));
 
+services.AddCors(options => { options.AddPolicy("AllowAllOrigins", builder => { builder.AllowAnyOrigin(); builder.AllowAnyMethod(); builder.AllowAnyHeader(); });});               
+
+            // services.AddCors("*");
           //   services.Add<
 
         }
@@ -50,6 +53,7 @@ namespace integracion.api
                 app.UseHsts();
             }
 
+            app.UseCors("AllowAllOrigins");
             app.UseHttpsRedirection();
             app.UseMvc();
         }

@@ -3,6 +3,7 @@ using System.Linq;
 using integracion.api.Models;
 using integracion.api.Models.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace integracion.api.Controllers {
 
@@ -22,7 +23,7 @@ namespace integracion.api.Controllers {
             return Ok(ctx.ToList());
         }
 
-        [HttpGet("{id}",Name = "GetById")]
+        [HttpGet("{id}")]
         public ActionResult<DeductionType> Get(int id)
         {
            var ctx = _integrationDbContext.Set<DeductionType>();
@@ -39,14 +40,17 @@ namespace integracion.api.Controllers {
             _integrationDbContext.DeductionTypes.Add(deductionType);
             _integrationDbContext.SaveChanges();
 
-            return CreatedAtRoute("GetById",new {id = deductionType.Id},deductionType);
+            return Created("",deductionType);
 
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] DeductionType value)
         {
+         _integrationDbContext.Entry(value).State = EntityState.Modified;
+         _integrationDbContext.SaveChanges();
+         return NoContent();
         }
 
         // DELETE api/values/5
@@ -56,7 +60,7 @@ namespace integracion.api.Controllers {
            var deductionType =  _integrationDbContext.DeductionTypes.FirstOrDefault(x=> x.Id == id);
             _integrationDbContext.DeductionTypes.Remove(deductionType);
             _integrationDbContext.SaveChanges();
-            return Delete(id);
+            return NoContent();
 
         }
 

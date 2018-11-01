@@ -5,10 +5,8 @@ using integracion.api.Models.Generic;
 namespace integracion.api.Models{
 
 
-    public class Employee : IBaseModel
+    public class Employee : BaseModel
     {
-        //Identificador
-        public int Id { get ; set ; }
         //Nombre
         public string Name { get; set; }
         //Cedula
@@ -19,11 +17,12 @@ namespace integracion.api.Models{
         public string JobTitle { get; set; }  
         //Salario Mensual
         public decimal MontSalary { get; set; }
-        //Identificador de la nomina a la que pertenece
-        public int? RosterId { get; set; }
-
+        //Identificador al tipo de nomina a la que pertenece
+        public int? RosterTypeId { get; set; }
+        public virtual RosterType RosterType { get; set; }
 
     }
+
 
 }
 

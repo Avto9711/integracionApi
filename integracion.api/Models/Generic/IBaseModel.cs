@@ -2,10 +2,10 @@
 using System;
 
 namespace integracion.api.Models.Generic{
-
-
-        public interface IBaseModel{
-            int Id {get;set;}    
+        public class BaseModel{
+            public int Id {get;set;}    
+            public bool Deleted {get;set;}   
+            public bool Disabled { get; set; } 
         }
 
 }

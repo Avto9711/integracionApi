@@ -3,6 +3,7 @@ using System.Linq;
 using integracion.api.Models;
 using integracion.api.Models.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace integracion.api.Controllers{
 
@@ -45,8 +46,12 @@ namespace integracion.api.Controllers{
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] Employee value)
         {
+          _integrationDbContext.Entry(value).State = EntityState.Modified;
+         _integrationDbContext.SaveChanges();
+         return NoContent();
+
         }
 
         // DELETE api/values/5
@@ -56,7 +61,7 @@ namespace integracion.api.Controllers{
            var employee =  _integrationDbContext.Employees.FirstOrDefault(x=> x.Id == id);
             _integrationDbContext.Employees.Remove(employee);
             _integrationDbContext.SaveChanges();
-            return Delete(id);
+            return NoContent();
 
         }
 

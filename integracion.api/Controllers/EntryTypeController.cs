@@ -3,6 +3,7 @@ using System.Linq;
 using integracion.api.Models;
 using integracion.api.Models.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace integracion.api.Controllers {
 
@@ -22,7 +23,7 @@ namespace integracion.api.Controllers {
             return Ok(ctx.ToList());
         }
 
-        [HttpGet("{id}",Name = "GetById")]
+        [HttpGet("{id}")]
         public ActionResult<EntryType> Get(int id)
         {
            var ctx = _integrationDbContext.Set<EntryType>();
@@ -39,14 +40,18 @@ namespace integracion.api.Controllers {
             _integrationDbContext.EntryTypes.Add(entryType);
             _integrationDbContext.SaveChanges();
 
-            return CreatedAtRoute("GetById",new {id = entryType.Id},entryType);
+            return Created("",entryType);
 
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] EntryType value)
         {
+            
+         _integrationDbContext.Entry(value).State = EntityState.Modified;
+         _integrationDbContext.SaveChanges();
+         return NoContent();
         }
 
         // DELETE api/values/5
@@ -56,7 +61,7 @@ namespace integracion.api.Controllers {
            var entryType =  _integrationDbContext.EntryTypes.FirstOrDefault(x=> x.Id == id);
             _integrationDbContext.EntryTypes.Remove(entryType);
             _integrationDbContext.SaveChanges();
-            return Delete(id);
+            return NoContent();
 
         }
 
