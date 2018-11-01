@@ -30,9 +30,11 @@ namespace integracion.api
         public void ConfigureServices(IServiceCollection services)
         {
             var conn = "data source=agroverde.database.windows.net;initial catalog=IntegracionApp;persist security info=False;user id=useradmin;password=Code1234,;MultipleActiveResultSets=True;TrustServerCertificate=False;Connection Timeout=300;";
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
              services.AddDbContext<IntegrationDbContext>(opt => opt.UseSqlServer(conn));
+
+          //   services.Add<
 
         }
 

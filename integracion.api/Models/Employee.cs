@@ -9,6 +9,8 @@ namespace integracion.api.Models{
     {
         //Identificador
         public int Id { get ; set ; }
+        //Nombre
+        public string Name { get; set; }
         //Cedula
         public string  Identification { get; set; } 
         //Departamento  
