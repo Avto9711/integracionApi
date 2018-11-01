@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/532d5be1-86fd-461a-b3c9-f22dbe48c3a5/resourceGroups/appsvc_rg_windows_centralus/providers/Microsoft.Web/sites/integracion-opensource",
+    "appService.deploySubpath": "bin\\Debug\\netcoreapp2.1\\publish"
+}
