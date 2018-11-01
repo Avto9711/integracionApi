@@ -10,7 +10,10 @@ namespace integracion.api.Models.Context{
                 
             }
 
-            public DbSet<Employee> Employees{get;set;}
+            public DbSet<Employee> Employees { get; set; }
+            public DbSet<EntryType> EntryTypes { get; set; }
+            public DbSet<DeductionType> DeductionTypes { get; set; }
+            
     }
 
 }
