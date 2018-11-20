@@ -9,7 +9,7 @@ namespace integracion.api.Models{
     public class Transaction : BaseModel
     {
         //Nombre
-        public string EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
         //Deduccion o entrada
         public int? DeductionTypeId { get; set; }
         public int? EntryTypeId { get; set; }

@@ -19,6 +19,8 @@ namespace integracion.api.Models{
         public decimal Amount { get; set; }
         public TrasactionStatus Status { get; set; }
 
+        public virtual Employee Employee {get;set;}
+
     }
 
 

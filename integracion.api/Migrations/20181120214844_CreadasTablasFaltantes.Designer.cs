@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using integracion.api.Models.Context;
 
 namespace integracion.api.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181120214844_CreadasTablasFaltantes")]
+    partial class CreadasTablasFaltantes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +156,9 @@ namespace integracion.api.Migrations
 
                     b.Property<bool>("Disabled");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<string>("EmployeeId");
+
+                    b.Property<int?>("EmployeeId1");
 
                     b.Property<int?>("EntryTypeId");
 
@@ -164,7 +168,7 @@ namespace integracion.api.Migrations
 
                     b.HasIndex("DeductionTypeId");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("EmployeeId1");
 
                     b.HasIndex("EntryTypeId");
 
@@ -194,8 +198,7 @@ namespace integracion.api.Migrations
 
                     b.HasOne("integracion.api.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EmployeeId1");
 
                     b.HasOne("integracion.api.Models.EntryType", "EntryType")
                         .WithMany()
