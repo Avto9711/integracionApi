@@ -14,12 +14,19 @@ namespace integracion.api.Models.Context{
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
                 base.OnModelCreating(modelBuilder);
-                foreach (var item in modelBuilder.Model.GetEntityTypes())
-                {
-                    var type = item.GetType();  
-                modelBuilder.Entity<typeof(type)>
-                    .HasQueryFilter(post => EF.Property<bool>(post, "Deleted") == false);
-                }
+
+                modelBuilder.Entity<Employee>().HasQueryFilter(y=>!y.Deleted);
+                modelBuilder.Entity<EntryType>().HasQueryFilter(y=>!y.Deleted);
+                modelBuilder.Entity<DeductionType>().HasQueryFilter(y=>!y.Deleted);
+                modelBuilder.Entity<GeneralLedger>().HasQueryFilter(y=>!y.Deleted);
+                modelBuilder.Entity<RosterType>().HasQueryFilter(y=>!y.Deleted);
+                modelBuilder.Entity<Transaction>().HasQueryFilter(y=>!y.Deleted);
+                // foreach (var item in modelBuilder.Model.GetEntityTypes())
+                // {
+                // //     var type = item.GetType();  
+                // // modelBuilder.Entity<typeof(type)>
+                // //     .HasQueryFilter(post => EF.Property<bool>(post, "Deleted") == false);
+                // }
 
             }
             public DbSet<Employee> Employees { get; set; }
