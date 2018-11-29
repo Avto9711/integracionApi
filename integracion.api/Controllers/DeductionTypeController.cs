@@ -37,6 +37,7 @@ namespace integracion.api.Controllers {
         public ActionResult<DeductionType> Post([FromBody] DeductionType deductionType)
         {
 
+
             _integrationDbContext.DeductionTypes.Add(deductionType);
             _integrationDbContext.SaveChanges();
 

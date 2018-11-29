@@ -14,6 +14,7 @@ using integracion.api.Models.Context;
 
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace integracion.api
 {
@@ -36,6 +37,11 @@ namespace integracion.api
 
 services.AddCors(options => { options.AddPolicy("AllowAllOrigins", builder => { builder.AllowAnyOrigin(); builder.AllowAnyMethod(); builder.AllowAnyHeader(); });});               
 
+
+    services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new Info { Title = "NominasAPI", Version = "v2" });
+    });
             // services.AddCors("*");
           //   services.Add<
 
@@ -55,6 +61,18 @@ services.AddCors(options => { options.AddPolicy("AllowAllOrigins", builder => { 
 
             app.UseCors("AllowAllOrigins");
             app.UseHttpsRedirection();
+
+
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+
             app.UseMvc();
         }
     }

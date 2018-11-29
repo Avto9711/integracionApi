@@ -19,8 +19,12 @@ namespace integracion.api.Controllers {
 
         [HttpGet]
         public ActionResult <IEnumerable<Transaction>> GetAll(){
-            var ctx = _integrationDbContext.Set<Transaction>();
-            return Ok(ctx.ToList());
+            var ctx = _integrationDbContext.Set<Transaction>()
+            .Include(y=>y.DeductionType)
+            .Include(y=>y.Employee)
+            .Include(y=>y.EntryType);
+            var list = ctx.ToList();
+            return Ok(list);
         }
 
         [HttpGet("{id}")]

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using integracion.api.Models;
 using integracion.api.Models.Context;
@@ -30,6 +31,43 @@ namespace integracion.api.Controllers {
            var obj = ctx.FirstOrDefault(x=>x.Id == id);
 
             return Ok(obj);
+        }
+
+        [HttpGet("GenerateMontNomina/{month}")]
+        public ActionResult<EntryType> GenerateMontNomina(int month)
+        {
+
+            var rosterMonth = new MonthRoster();
+            rosterMonth.RosterMonthMonth =  CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
+
+
+            var ctx = _integrationDbContext.Set<Transaction>();
+ 
+            var transactions = ctx.
+            Where(x=>x.Date.Month == month && x.Date.Year == System.DateTime.Now.Year)
+            .GroupBy(y=>y.Employee);
+
+            foreach (var item in transactions)
+            {
+                var employeeRoster = new EmployeeRoster
+                {
+                    EmployeeName = item.Key.Name,
+                    EmployeeIdentification =  item.Key.Identification,
+                    DeductionTotal =  item.Where(y=>y.DeductionTypeId.HasValue).Sum(y=>y.Amount),
+                    EntyTotal =  item.Where(y=>y.EntryTypeId.HasValue).Sum(y=>y.Amount),
+                    SalaryBruto = item.Key.MontSalary,
+                    SalaryNeto = ( item.Key.MontSalary + 
+                    (item.Where(y=>y.EntryTypeId.HasValue).Sum(y=>y.Amount) -
+                     item.Where(y=>y.DeductionTypeId.HasValue).Sum(y=>y.Amount) ) )
+                };
+
+                rosterMonth.Employees.Add(employeeRoster);
+            }
+
+            rosterMonth.EmployeeTotalAfected = rosterMonth.Employees.Count;
+            rosterMonth.TotalRosterAmount = rosterMonth.Employees.Sum(o=>o.SalaryNeto);
+
+            return Ok(rosterMonth);
         }
 
         // POST api/values
