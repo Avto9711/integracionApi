@@ -20,6 +20,8 @@ namespace integracion.api.Models{
         [JsonConverter(typeof(OnlyDateConverter))]
         public DateTime Date { get; set; } 
         //Monto
+        [JsonConverter(typeof(DecimalCurrencyConverter))]
+
         public decimal Amount { get; set; }
         //Estado
         public TrasactionStatus Status { get; set; }
@@ -31,7 +33,7 @@ namespace integracion.api.Models{
         [NotMapped]
         public string   TypeName { get { 
             
-            return this.EntryTypeId.HasValue ?  this.EntryType.Name : this.DeductionType.Name;
+            return this.EntryTypeId != null  ?  this.EntryType?.Name : this.DeductionType?.Name;
         
         } }         
 
@@ -39,7 +41,7 @@ namespace integracion.api.Models{
         [NotMapped]
         public string   Type { get { 
             
-            return this.EntryTypeId.HasValue ?  "Entrada" : "Deducción";
+            return this.EntryTypeId != null  ?  "Entrada" : "Deducción";
         
         } }    
     }

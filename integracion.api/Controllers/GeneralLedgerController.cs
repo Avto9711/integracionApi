@@ -66,6 +66,8 @@ namespace integracion.api.Controllers {
 
             rosterMonth.EmployeeTotalAfected = rosterMonth.Employees.Count;
             rosterMonth.TotalRosterAmount = rosterMonth.Employees.Sum(o=>o.SalaryNeto);
+            rosterMonth.TotalRosterDeductionAmount = rosterMonth.Employees.Sum(o=>o.DeductionTotal);
+            rosterMonth.TotalRosterEntryAmount = rosterMonth.Employees.Sum(o=>o.EntyTotal);
 
             return Ok(rosterMonth);
         }
