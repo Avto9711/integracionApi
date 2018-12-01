@@ -26,7 +26,7 @@ namespace integracion.api.Controllers {
             var account = 71;
             var debitAccount = 48;
             var creditAccont = 48;
-            var description = "Nomina fecha: " + transaction.Date.ToString();
+            var description = "Nomina de Empleados";
 
             var client = new WSXContabilidadSoapClient(EndpointConfiguration.WSXContabilidadSoap);
             var request = client.registrarAsientoAsync(description, account, (double)transaction.Amount, debitAccount, creditAccont);
